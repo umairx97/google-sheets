@@ -1,15 +1,9 @@
 import React, { Component } from "react";
 import { Container, Nav } from "./styled-components";
 import FusionCharts from "fusioncharts";
-import Charts from "fusioncharts/fusioncharts.charts";
-import Maps from "fusioncharts/fusioncharts.maps";
-import USARegion from "fusionmaps/maps/es/fusioncharts.usaregion";
-import ReactFC from "react-fusioncharts";
 import "./charts-theme";
 import axios from "axios";
 import UserImg from "../assets/images/user-img-placeholder.jpeg";
-
-ReactFC.fcRoot(FusionCharts, Charts, Maps, USARegion);
 
 class App extends Component {
   state = {
@@ -18,14 +12,7 @@ class App extends Component {
     currentHighlight: null
   };
 
-
-
   componentDidMount() {
-
-
-    const { sheetData } = this.state;
-
-
 
     this.setState({
       loader: true
@@ -40,40 +27,26 @@ class App extends Component {
       .catch(err => {
         console.log(err);
       });
-
-
-
-
-
-
   }
 
-
-
   render() {
-
-    const { sheetData } = this.state
-
+    const { sheetData } = this.state;
 
     const currentHour = new Date().getHours();
-    const times = sheetData.map(item => item['ros-schedule']);
-    let trigger = null
-
+    const times = sheetData.map(item => item["ros-schedule"]);
+    let trigger = null;
 
     for (let i = 0; i < times.length; i++) {
       let currStr = JSON.stringify(times[i]);
-      const subtime = currStr.substring(1, 3)
+      const subtime = currStr.substring(1, 3);
 
-      console.log('THis is current time =====>', currentHour);
-      console.log('THis is substring =====>', parseInt(subtime))
-
+      console.log("THis is current time =====>", currentHour);
+      console.log("THis is substring =====>", parseInt(subtime));
 
       if (parseInt(subtime) === currentHour) {
-        trigger = true
+        trigger = true;
       }
     }
-
-
 
     return (
       <Container>
@@ -120,7 +93,6 @@ class App extends Component {
               <Container className="card grid-card is-card-dark">
                 <Container className="card-heading">
                   <Container className="is-dark-text-light letter-spacing text-large">
-
                     {trigger ? <p>Current Active Time: <span style={{ color: trigger ? 'yellow' : null }}>{currentHour}:00</span></p> : <p>Schedule</p>}
                   </Container>
                 </Container>
