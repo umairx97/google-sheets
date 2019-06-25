@@ -120,7 +120,8 @@ class App extends Component {
               <Container className="card grid-card is-card-dark">
                 <Container className="card-heading">
                   <Container className="is-dark-text-light letter-spacing text-large">
-                    Current Active Time:  <span style = {{color: trigger ? 'yellow' : null}}>{currentHour}:00</span>
+
+                    {trigger ? <p>Current Active Time: <span style={{ color: trigger ? 'yellow' : null }}>{currentHour}:00</span></p> : <p>Schedule</p>}
                   </Container>
                 </Container>
 
