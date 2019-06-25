@@ -14,9 +14,19 @@ ReactFC.fcRoot(FusionCharts, Charts, Maps, USARegion);
 class App extends Component {
   state = {
     sheetData: [],
-    print: false
+    print: false,
+    currentHighlight: null
   };
-  componentWillMount() {
+
+
+
+  componentDidMount() {
+
+
+    const { sheetData } = this.state;
+
+
+
     this.setState({
       loader: true
     });
@@ -30,10 +40,41 @@ class App extends Component {
       .catch(err => {
         console.log(err);
       });
+
+
+
+
+
+
   }
 
+
+
   render() {
-    const { sheetData } = this.state;
+
+    const { sheetData } = this.state
+
+
+    const currentHour = new Date().getHours();
+    const times = sheetData.map(item => item['ros-schedule']);
+    let trigger = null
+
+
+    for (let i = 0; i < times.length; i++) {
+      let currStr = JSON.stringify(times[i]);
+      const subtime = currStr.substring(1, 3)
+
+      console.log('THis is current time =====>', currentHour);
+      console.log('THis is substring =====>', parseInt(subtime))
+
+
+      if (parseInt(subtime) === currentHour) {
+        trigger = true
+      }
+    }
+
+
+
     return (
       <Container>
         {/* static navbar - top */}
@@ -79,7 +120,7 @@ class App extends Component {
               <Container className="card grid-card is-card-dark">
                 <Container className="card-heading">
                   <Container className="is-dark-text-light letter-spacing text-large">
-                    Schedule
+                    Current Active Time:  <span style = {{color: trigger ? 'yellow' : null}}>{currentHour}:00</span>
                   </Container>
                 </Container>
 
